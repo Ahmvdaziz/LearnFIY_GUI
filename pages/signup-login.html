@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LearnFIY – Login & Signup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/auth.css">
+</head>
+<body>
+  <nav>
+    <a href="../index.html" class="logo">LearnFIY</a>
+    <div class="nav-right">
+      <a href="#" class="nav-link">Teach on LearnFIY</a>
+      <a href="#" class="nav-link">Business</a>
+    </div>
+  </nav>
+
+  <div class="auth-wrapper">
+    <div class="auth-left">
+      <div class="blob-left blob-left-1"></div>
+      <div class="blob-left blob-left-2"></div>
+      <div class="left-content">
+      <div class="left-icon">🎓</div>
+        <h2>Learn Without <span>Limits</span></h2>
+        <p>Ready to join millions of learners building real skills with world-class instructors.</p>
+        <div class="left-features">
+          <div class="left-feature">
+            <span class="feature-emoji">🎯</span>
+            <span class="feature-text">210,000+ courses across every discipline</span>
+          </div>
+          <div class="left-feature">
+            <span class="feature-emoji">📱</span>
+            <span class="feature-text">Learn on any device, online or offline</span>
+          </div>
+          <div class="left-feature">
+            <span class="feature-emoji">🏆</span>
+            <span class="feature-text">Certificate of completion for every course</span>
+          </div>
+          <div class="left-feature">
+            <span class="feature-emoji">♾️</span>
+            <span class="feature-text">Lifetime access once enrolled</span>
+          </div>
+        </div>
+        <div class="left-stats">
+          <div class="left-stat">
+            <div class="left-stat-num">62M+</div>
+            <div class="left-stat-label">Learners</div>
+          </div>
+          <div class="left-stat">
+            <div class="left-stat-num">210K+</div>
+            <div class="left-stat-label">Courses</div>
+          </div>
+          <div class="left-stat">
+            <div class="left-stat-num">75+</div>
+            <div class="left-stat-label">Languages</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-right">
+      <div class="auth-box">
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="switchTab('login')">Log In</button>
+          <button class="auth-tab" onclick="switchTab('signup')">Sign Up</button>
+        </div>
+        <div class="form-panel active" id="panel-login">
+          <div class="form-header">
+            <h1>Welcome back</h1>
+            <p>Log in to continue your learning journey.</p>
+          </div>
+
+          <div class="social-btns">
+            <button class="social-btn" onclick="socialAuth('Google')">
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"/> Google
+            </button>
+            <button class="social-btn" onclick="socialAuth('Facebook')">
+              <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook"/> Facebook
+            </button>
+          </div>
+
+          <div class="divider">
+            <div class="divider-line"></div>
+            <span>or continue with email</span>
+            <div class="divider-line"></div>
+          </div>
+
+          <form id="login-form" novalidate onsubmit="handleLogin(event)">
+            <div class="form-group">
+              <label for="login-email">Email address</label>
+              <div class="input-wrap">
+                <span class="input-icon">✉</span>
+                <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email"/>
+              </div>
+              <div class="field-error" id="login-email-err">Please enter a valid email.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="login-pw">Password</label>
+              <div class="input-wrap">
+                <span class="input-icon">🔒</span>
+                <input type="password" id="login-pw" placeholder="Your password" autocomplete="current-password"/>
+                <button type="button" class="toggle-pw" onclick="togglePw('login-pw', this)">👁</button>
+              </div>
+              <div class="field-error" id="login-pw-err">Password is required.</div>
+            </div>
+
+            <div class="form-meta">
+              <a href="#" class="forgot-link" onclick="showForgot(event)">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-submit" id="login-btn">
+              <span class="btn-text">Log In</span>
+              <span class="btn-loader"><div class="spinner"></div></span>
+            </button>
+          </form>
+
+          <p class="switch-text">
+            New to Udemy? <a onclick="switchTab('signup')">Create an account</a>
+          </p>
+        </div>
+
+        <div class="form-panel" id="panel-signup">
+          <div class="form-header">
+            <h1>Create account</h1>
+            <p>Start learning today. It's free.</p>
+          </div>
+
+          <div class="social-btns">
+            <button class="social-btn" onclick="socialAuth('Google')">
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"/> Google
+            </button>
+            <button class="social-btn" onclick="socialAuth('Facebook')">
+              <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook"/> Facebook
+            </button>
+          </div>
+
+          <div class="divider">
+            <div class="divider-line"></div>
+            <span>or sign up with email</span>
+            <div class="divider-line"></div>
+          </div>
+
+          <form id="signup-form" novalidate onsubmit="handleSignup(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="signup-first">First name</label>
+                <div class="input-wrap">
+                  <span class="input-icon">👤</span>
+                  <input type="text" id="signup-first" placeholder="Jane" autocomplete="given-name"/>
+                </div>
+                <div class="field-error" id="signup-first-err">Required.</div>
+              </div>
+              <div class="form-group">
+                <label for="signup-last">Last name</label>
+                <div class="input-wrap">
+                  <span class="input-icon">👤</span>
+                  <input type="text" id="signup-last" placeholder="Doe" autocomplete="family-name"/>
+                </div>
+                <div class="field-error" id="signup-last-err">Required.</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-email">Email address</label>
+              <div class="input-wrap">
+                <span class="input-icon">✉</span>
+                <input type="email" id="signup-email" placeholder="you@example.com" autocomplete="email"/>
+              </div>
+              <div class="field-error" id="signup-email-err">Please enter a valid email.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-pw">Password</label>
+              <div class="input-wrap">
+                <span class="input-icon">🔒</span>
+                <input type="password" id="signup-pw" placeholder="Min. 8 characters"
+                       autocomplete="new-password" oninput="checkStrength(this.value)"/>
+                <button type="button" class="toggle-pw" onclick="togglePw('signup-pw', this)">👁</button>
+              </div>
+              <div class="pw-strength">
+                <div class="pw-bars">
+                  <div class="pw-bar" id="bar1"></div>
+                  <div class="pw-bar" id="bar2"></div>
+                  <div class="pw-bar" id="bar3"></div>
+                  <div class="pw-bar" id="bar4"></div>
+                </div>
+                <div class="pw-label" id="pw-label">Enter a password</div>
+              </div>
+              <div class="field-error" id="signup-pw-err">Password must be at least 8 characters.</div>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="agree-terms"/>
+              <div class="custom-checkbox" id="terms-box" onclick="toggleCheckbox()"></div>
+              <label class="checkbox-label" for="agree-terms" onclick="toggleCheckbox()">
+                I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>
+              </label>
+            </div>
+            <div class="field-error" id="terms-err" style="margin-top:-12px; margin-bottom:14px;">You must agree to continue.</div>
+
+            <button type="submit" class="btn-submit" id="signup-btn">
+              <span class="btn-text">Create Account</span>
+              <span class="btn-loader"><div class="spinner"></div></span>
+            </button>
+          </form>
+
+          <p class="switch-text">
+            Already have an account? <a onclick="switchTab('login')">Log in</a>
+          </p>
+        </div>
+
+        <div class="success-msg" id="success-msg">
+          <div class="success-icon">✓</div>
+          <h3 id="success-title">You're in!</h3>
+          <p id="success-body">Redirecting you to your dashboard...</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="../assets/js/auth.js"></script>
+</body>
+</html>
