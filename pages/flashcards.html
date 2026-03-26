@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flashcards – LearnFIY</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/flashcards.css">
+</head>
+<body>
+  <nav>
+    <div class="logo"><a href="../index.html" style="text-decoration:none;background:linear-gradient(135deg,#a435f0,#6610f2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">LearnFIY</a></div>
+    <ul class="nav-center">
+      <li><a href="../index.html">Explore</a></li>
+      <li><a href="../index.html#courses">Courses</a></li>
+      <li><a href="flashcards.html" style="color:var(--purple)">Flashcards</a></li>
+      <li><a href="../index.html#pricing">Pricing</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="fc-nav-search">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" id="navSearch" placeholder="Search cards..." oninput="searchCards(this.value)" />
+      </div>
+      <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Toggle dark mode">&#127769;</button>
+      <a href="signup-login.html" class="btn btn-ghost">Log In</a>
+      <a href="signup-login.html" class="btn btn-purple">Sign Up Free</a>
+    </div>
+  </nav>
+
+  <section class="fc-hero">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="fc-hero-content">
+      <span class="section-tag">Interactive Study</span>
+      <h1>Master Any Topic with <span class="gradient-text">Flashcards</span></h1>
+      <p>Flip through cards, track your progress, and reinforce what you've learned — one card at a time.</p>
+    </div>
+  </section>
+
+  <section class="fc-controls-bar">
+    <div class="fc-controls-inner">
+      <div class="fc-deck-select-wrap">
+        <label for="deckSelect">Choose a deck</label>
+        <select id="deckSelect" onchange="loadDeck(this.value)">
+          <option value="webdev">Web Development</option>
+          <option value="python">Python Basics</option>
+          <option value="uiux">UI/UX Design</option>
+          <option value="ml">Machine Learning</option>
+        </select>
+      </div>
+      <div class="fc-progress-wrap">
+        <span id="progressLabel">Card <span id="currentNum">1</span> of <span id="totalNum">1</span></span>
+        <div class="fc-progress-bar"><div class="fc-progress-fill" id="progressFill"></div></div>
+      </div>
+      <div class="fc-stats">
+        <div class="fc-stat fc-stat-know"><span id="knowCount">0</span> Know it</div>
+        <div class="fc-stat fc-stat-review"><span id="reviewCount">0</span> Review</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fc-main">
+    <div class="fc-card-area">
+      <div class="fc-card" id="flashcard" onclick="flipCard()">
+        <div class="fc-card-inner" id="cardInner">
+          <div class="fc-card-front">
+            <div class="fc-card-category" id="cardCategory">Web Development</div>
+            <div class="fc-card-question" id="cardQuestion">Loading...</div>
+            <div class="fc-flip-hint">Click to reveal answer</div>
+          </div>
+          <div class="fc-card-back">
+            <div class="fc-card-answer-label">Answer</div>
+            <div class="fc-card-answer" id="cardAnswer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fc-action-row">
+        <button class="fc-btn fc-btn-prev" onclick="prevCard()">&#8592; Prev</button>
+        <div class="fc-verdict-btns" id="verdictBtns" style="display:none">
+          <button class="fc-btn fc-btn-review" onclick="markCard('review')">&#x21BA; Review Again</button>
+          <button class="fc-btn fc-btn-know" onclick="markCard('know')">&#x2713; Know It</button>
+        </div>
+        <button class="fc-btn fc-btn-next" onclick="nextCard()">Next &#8594;</button>
+      </div>
+    </div>
+
+    <div class="fc-sidebar">
+      <div class="fc-sidebar-card">
+        <h3>Deck Overview</h3>
+        <div id="deckList" class="fc-deck-list"></div>
+      </div>
+      <div class="fc-sidebar-card">
+        <h3>Keyboard Shortcuts</h3>
+        <ul class="fc-shortcuts">
+          <li><kbd>Space</kbd> Flip card</li>
+          <li><kbd>&#8592;</kbd> Previous card</li>
+          <li><kbd>&#8594;</kbd> Next card</li>
+          <li><kbd>K</kbd> Mark "Know it"</li>
+          <li><kbd>R</kbd> Mark "Review"</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="fc-complete-modal" id="completeModal" style="display:none">
+    <div class="fc-modal-box">
+      <div class="fc-modal-icon">&#127881;</div>
+      <h2>Deck Complete!</h2>
+      <p>You've gone through all <strong id="modalTotal"></strong> cards.</p>
+      <div class="fc-modal-stats">
+        <div class="fc-modal-stat know"><span id="modalKnow">0</span><small>Know it</small></div>
+        <div class="fc-modal-stat review"><span id="modalReview">0</span><small>Need review</small></div>
+      </div>
+      <div class="fc-modal-actions">
+        <button class="btn-pricing btn-pricing-outline" onclick="restartDeck()">Restart Deck</button>
+        <button class="btn btn-purple" onclick="reviewWeak()">Review Weak Cards</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">LearnFIY</div>
+        <p>The world's leading online learning platform. Build skills, advance your career, and explore your passions — all in one place.</p>
+        <div class="footer-socials">
+          <a class="social-btn" href="#">&#x1F426;</a>
+          <a class="social-btn" href="#">&#x1F4BC;</a>
+          <a class="social-btn" href="#">&#x1F4D8;</a>
+          <a class="social-btn" href="#">&#x1F4F8;</a>
+          <a class="social-btn" href="#">&#x25B6;&#xFE0F;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="../index.html">All Courses</a></li>
+          <li><a href="flashcards.html">Flashcards</a></li>
+          <li><a href="#">Certifications</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 LearnFIY Clone. Built for demo purposes only.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/flashcards.js"></script>
+</body>
+</html>

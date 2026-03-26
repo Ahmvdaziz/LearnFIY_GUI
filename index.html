@@ -6,6 +6,7 @@
   <title>LearnFIY – Learn Without Limits</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/flashcards.css">
 </head>
 <body>
   <nav>
@@ -15,8 +16,14 @@
       <li><a href="#">Business</a></li>
       <li><a href="#">Teach</a></li>
       <li><a href="#">Pricing</a></li>
+      <li><a href="pages/flashcards.html">Flashcards</a></li>
     </ul>
     <div class="nav-right">
+      <div class="fc-nav-search">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" placeholder="Search..." />
+      </div>
+      <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Toggle dark mode">&#127769;</button>
       <a href="pages/signup-login.html" class="btn btn-ghost">Log In</a>
       <a href="pages/signup-login.html" class="btn btn-purple">Sign Up Free</a>
     </div>
@@ -471,6 +478,7 @@
   </footer>
 
   <script src="assets/js/script.js"></script>
+  <script src="assets/js/flashcards.js"></script>
 
 </body>
 </html>
